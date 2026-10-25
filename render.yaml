@@ -1,0 +1,8 @@
+# Render reads this file to know how to build and start the app
+services:
+  - type: web
+    name: simple-calculator
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app

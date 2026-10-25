@@ -1,0 +1,346 @@
+/* ===== Colors and sizes used across the site ===== */
+:root {
+  --navy: #0A1F44;
+  --navy-light: #1C3A6E;   /* hover accent */
+  --navy-mid: #2A5BB5;     /* highlight for "=" */
+  --navy-soft: #EEF2F9;    /* very light navy for number keys */
+  --white: #FFFFFF;
+  --bg: #F5F7FB;
+  --text: #0A1F44;
+  --muted: #5B6B86;
+  --radius: 20px;
+  --shadow-lg: 0 24px 60px rgba(10, 31, 68, 0.18);
+  --shadow-sm: 0 4px 16px rgba(10, 31, 68, 0.06);
+}
+
+/* ===== Page basics ===== */
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 16px 56px;
+}
+
+a { color: inherit; }
+
+/* ===== Header: top bar + hero ===== */
+.site-header {
+  /* navy background with a soft glow */
+  background:
+    radial-gradient(800px 400px at 80% -10%, rgba(77, 141, 255, 0.35), transparent 60%),
+    radial-gradient(600px 300px at 0% 100%, rgba(42, 91, 181, 0.35), transparent 60%),
+    var(--navy);
+  color: var(--white);
+  padding: 0 16px 120px;    /* extra bottom space so the calculator overlaps it */
+}
+
+.topbar {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 18px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 1.05rem;
+}
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.nav-links { display: flex; gap: 20px; }
+.nav-links a {
+  text-decoration: none;
+  opacity: 0.8;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: opacity 0.2s;
+}
+.nav-links a:hover { opacity: 1; }
+
+.hero {
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 40px;
+}
+.badge {
+  display: inline-block;
+  margin: 0 0 16px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.hero h1 {
+  margin: 0;
+  font-size: clamp(1.9rem, 5.5vw, 3rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+.tagline {
+  margin: 14px auto 0;
+  max-width: 520px;
+  opacity: 0.8;
+  font-size: 1.05rem;
+}
+
+/* ===== Calculator card ===== */
+.calculator {
+  background: var(--white);
+  border-radius: 28px;
+  box-shadow: var(--shadow-lg);
+  padding: 22px;
+  max-width: 380px;
+  margin: -84px auto 48px;   /* pulls the card up over the header */
+  animation: rise 0.5s ease-out;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Display screen */
+.display {
+  background: linear-gradient(160deg, #10295A, var(--navy));
+  color: var(--white);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  margin-bottom: 20px;
+  text-align: right;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.25);
+  overflow-wrap: anywhere;   /* long numbers wrap instead of overflowing */
+  font-variant-numeric: tabular-nums;
+}
+.display-expression { font-size: 1rem; opacity: 0.6; min-height: 1.6em; }
+.display-result {
+  font-size: clamp(2.2rem, 10vw, 3rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+/* Button grid: 4 columns */
+.keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.key {
+  font: inherit;
+  font-size: 1.4rem;
+  font-weight: 500;
+  aspect-ratio: 1 / 1;
+  border: none;
+  border-radius: 18px;
+  background: var(--navy-soft);
+  color: var(--navy);
+  cursor: pointer;
+  box-shadow: 0 2px 0 rgba(10, 31, 68, 0.06);
+  transition: transform 0.12s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.key:hover {
+  background: var(--navy-light);
+  color: var(--white);
+  box-shadow: 0 8px 18px rgba(10, 31, 68, 0.22);
+  transform: translateY(-1px);
+}
+/* .pressed is added by script.js when a keyboard key is used */
+.key:active,
+.key.pressed { transform: scale(0.93); }
+
+/* Visible keyboard focus (accessibility) */
+a:focus-visible,
+.key:focus-visible,
+summary:focus-visible {
+  outline: 3px solid #4D8DFF;
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+.key:focus-visible { border-radius: 18px; }
+
+/* Operator keys: navy with white text */
+.key-op { background: var(--navy); color: var(--white); }
+
+/* Clear and backspace: outlined */
+.key-fn { background: var(--white); box-shadow: inset 0 0 0 2px var(--navy-soft); }
+
+/* Equals: tall and highlighted */
+.key-equals {
+  grid-row: span 2;
+  aspect-ratio: auto;
+  background: linear-gradient(170deg, var(--navy-mid), var(--navy));
+  color: var(--white);
+  font-size: 1.8rem;
+  box-shadow: 0 10px 22px rgba(42, 91, 181, 0.35);
+}
+.key-equals:hover { background: var(--navy-light); }
+
+/* Zero is two columns wide */
+.key-zero { grid-column: span 2; aspect-ratio: auto; }
+
+.hint {
+  margin: 16px 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* ===== Feature cards ===== */
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.feature {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.feature:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(10, 31, 68, 0.1); }
+.feature-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--navy-soft);
+  font-size: 1.2rem;
+}
+.feature h3 { margin: 12px 0 4px; font-size: 1rem; }
+.feature p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+
+/* ===== How to use & FAQ ===== */
+.info {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 28px;
+  margin-bottom: 24px;
+  scroll-margin-top: 16px;
+}
+.info h2 { margin: 0 0 16px; font-size: 1.4rem; letter-spacing: -0.01em; }
+
+/* Numbered steps with navy number circles */
+.steps { list-style: none; counter-reset: step; padding: 0; margin: 0; }
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 44px;
+  margin-bottom: 14px;
+}
+.steps li:last-child { margin-bottom: 0; }
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--white);
+  display: grid;
+  place-items: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+kbd {
+  background: var(--navy-soft);
+  border-radius: 6px;
+  padding: 1px 7px;
+  font-family: inherit;
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+/* FAQ accordion */
+details { border-top: 1px solid var(--navy-soft); padding: 14px 0; }
+details:first-of-type { border-top: none; padding-top: 0; }
+details:last-of-type { padding-bottom: 0; }
+summary {
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+summary::-webkit-details-marker { display: none; }
+summary::after {
+  content: "+";
+  font-size: 1.3rem;
+  font-weight: 400;
+  transition: transform 0.2s ease;
+}
+details[open] summary::after { transform: rotate(45deg); }
+details p { margin: 8px 0 0; color: var(--muted); }
+
+/* ===== Footer ===== */
+.site-footer {
+  background: var(--navy);
+  color: rgba(255, 255, 255, 0.75);
+  text-align: center;
+  padding: 24px 16px;
+  font-size: 0.9rem;
+}
+.site-footer p { margin: 0; }
+
+/* ===== Tablets and phones ===== */
+@media (max-width: 700px) {
+  .features { grid-template-columns: 1fr; }
+  .info { padding: 22px; }
+}
+
+@media (max-width: 420px) {
+  .nav-links { display: none; }
+  .calculator { padding: 16px; border-radius: 24px; }
+  .keys { gap: 9px; }
+  .key { font-size: 1.25rem; border-radius: 14px; }
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
